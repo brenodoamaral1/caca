@@ -3,10 +3,10 @@ import Image from "next/image";
 export default function RecommendationsPage() {
   const recommendations = [
     {
-      title: "Nature Communications publica artigo de ex-bolsistas da CAPES",
+      title: "Desenvolvimento sustentável: um discurso sobre a relação entre desenvolvimento e natureza",
       description:
-        "Um artigo publicado na Nature Communications foi um destaque recente dos ex-bolsistas da CAPES, demonstrando avanços significativos na ciência.",
-      date: '18/01/2019',
+        "Trata-se do estudo de definições de desenvolvimento sustentável, elemento fundamental de repertórios interpretativos para a relação entre desenvolvimento e natureza.",
+      date: '24/06/2008',
       image: "/card1.png",
       stars: 5,
       tag: "Artigo",
@@ -44,8 +44,14 @@ export default function RecommendationsPage() {
     <main className="bg-gray-100 min-h-screen">
 
       {/* Breadcrumb */}
-      <div className="bg-indigo-950 text-white py-6 px-8 text-base">
-        {'>'} Recomendações
+      <div className="flex flex-row gap-2 bg-indigo-950 text-white py-6 px-8 text-base">
+      <Image
+              src={'/headericon.svg'}
+              alt={'seta'}
+              width={10}
+              height={10}
+              className=""
+            />  Recomendações
       </div>
 
       {/* Conteúdo Principal */}
@@ -67,12 +73,12 @@ export default function RecommendationsPage() {
             <Image
               src={rec.image}
               alt={rec.title}
-              width={200}
-              height={100}
-              className="w-1/2"
+              width={150}
+              height={150}
+              className="w-1/2 m-15"
             />
             {/* Conteúdo */}
-            <div className="p-4 flex flex-col justify-between w-1/2">
+            <a href="/artigo" className="p-4 flex flex-col justify-between w-1/2">
               <div>
                 <h3 className="text-md text-black font-semibold">{rec.title}</h3>
                 <div className="flex gap-2">
@@ -89,7 +95,7 @@ export default function RecommendationsPage() {
                   {"☆".repeat(5 - rec.stars)}
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         ))}
       </div>

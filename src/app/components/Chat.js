@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import sendMessageToChatbot from '../../services/api'
 
 export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,25 +16,36 @@ export default function Chat() {
   ]);
   const [inputValue, setInputValue] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputValue.trim() === "") return;
-
-    // Adiciona a mensagem do usuário
+  
+    // Adiciona a mensagem do usuário na interface
     setMessages((prevMessages) => [
       ...prevMessages,
       { sender: "user", text: inputValue },
     ]);
+  
+    const userMessage = inputValue; // Armazena a mensagem do usuário
     setInputValue(""); // Limpa o campo de entrada
-
-    // Simula uma resposta do "bot"
-    setTimeout(() => {
+  
+    try {
+      // Envia a mensagem para o backend e recebe a resposta
+      const chatbotResponse = await sendMessageToChatbot(userMessage);
+  
+      // Adiciona a resposta do chatbot na interface
       setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: "bot", text: "Recebi sua mensagem!" },
+        { sender: "bot", text: chatbotResponse },
       ]);
-    }, 1000);
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", text: "Ops! Algo deu errado. Tente novamente." },
+      ]);
+    }
   };
-
+  
   return (
     <>
       {/* Botão do Chat */}
@@ -56,7 +68,7 @@ export default function Chat() {
       {/* Janela do Chat */}
       {isOpen && (
         <div
-          className="fixed bottom-0 right-6 w-80 h-96 bg-white rounded-lg shadow-lg border border-gray-300 flex flex-col"
+          className="fixed bottom-0 right-6 w-150 h-3/4 bg-white rounded-lg shadow-lg border border-gray-300 flex flex-col"
           style={{ marginRight: "16px" }}
         >
           {/* Cabeçalho do Chat */}
@@ -79,25 +91,25 @@ export default function Chat() {
 
           {/* Conteúdo do Chat */}
           <div className="flex-1 mb-12 p-4 bg-blue-50 bg-[url('/chatbg.svg')] overflow-y-auto">
-          <div>
-             {messages.map((message, index) => (
-              <div
+            {messages.map((message, index) => (
+                <div
                 key={index}
                 className={`flex mb-2 ${
-                  message.sender === "user" ? "justify-end" : "justify-start"
+                    message.sender === "user" ? "justify-end" : "justify-start"
                 }`}
-              >
-                <div
-                  className={`max-w-xs px-4 py-2 rounded-lg text-white ${
-                    message.sender === "user"
-                      ? "bg-blue-600 text-right"
-                      : "bg-gray-400 text-left"
-                  }`}
                 >
-                  {message.text}
+                <div
+                    className={`max-w-xs px-4 py-2 rounded-lg text-white ${
+                    message.sender === "user"
+                        ? "bg-blue-600 text-right"
+                        : "bg-gray-400 text-left"
+                    }`}
+                >
+                    {message.text}
                 </div>
-              </div>
+                </div>
             ))}
+            </div>
             {/* Caixa de Texto */}
           <div className="fixed bottom-1 p-4 flex items-center">
             <input
@@ -117,8 +129,6 @@ export default function Chat() {
             </button>
           </div>
           </div>
-          </div>
-        </div>
       )}
     </>
   );
