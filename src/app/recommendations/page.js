@@ -6,83 +6,42 @@ export default function RecommendationsPage() {
       title: "Nature Communications publica artigo de ex-bolsistas da CAPES",
       description:
         "Um artigo publicado na Nature Communications foi um destaque recente dos ex-bolsistas da CAPES, demonstrando avanços significativos na ciência.",
-      image: "/image1.jpg",
+      date: '18/01/2019',
+      image: "/card1.png",
       stars: 5,
-      date: "12/11/2023",
-      tag: "Ciência",
+      tag: "Artigo",
     },
     {
       title: "Aparência de Plutão fascina cientistas",
       description:
         "Pesquisas recentes revelaram novas informações sobre a aparência de Plutão, fascinando cientistas e astrônomos ao redor do mundo.",
-      image: "/image2.jpg",
+      date: '05/08/2015',
+      image: "/card2.png",
       stars: 5,
-      date: "10/11/2023",
-      tag: "Astrofísica",
+      tag: "Artigo",
     },
     {
       title: "Bolsista do CsF na Escócia tem artigo publicado no Nature Climate Change",
       description:
         "Pesquisas sobre mudanças climáticas lideradas por brasileiros são destaque em publicação de alto impacto.",
-      image: "/image3.jpg",
+      date: '21/01/2016',  
+      image: "/card3.png",
       stars: 5,
-      date: "08/11/2023",
-      tag: "Clima",
+      tag: "Artigo",
     },
     {
       title: "CAPES publica regras para pagamento de artigos científicos",
       description:
         "A CAPES anuncia novas políticas de pagamento para promover acesso e democratização de artigos científicos.",
-      image: "/image4.jpg",
+      date: '06/05/2024',
+      image: "/card4.png",
       stars: 4,
-      date: "05/11/2023",
-      tag: "Educação",
+      tag: "Artigo",
     },
   ];
 
   return (
     <main className="bg-gray-100 min-h-screen">
-      {/* Cabeçalho */}
-      <header className="bg-#FAFAFA-900 text-white py-4 px-8 flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <Image
-            src="/capeslogo.svg"
-            alt="CAPES logo"
-            width={400}
-            height={26}
-            className="object-contain"
-          />
-        </div>
-        <nav className="flex space-x-6">
-          <a href="#" className="text-black hover:font-semibold">
-            Sobre
-          </a>
-          <a href="#" className="text-black hover:font-semibold">
-            Acervo
-          </a>
-          <a href="#" className="text-black hover:font-semibold">
-            Treinamentos
-          </a>
-          <a href="#" className="text-black hover:font-semibold">
-            Informativos
-          </a>
-          <a href="#" className="text-black font-semibold hover:font-semibold">
-            Recomendações
-          </a>
-          <a href="#" className="text-black hover:font-semibold">
-            Ajuda
-          </a>
-        </nav>
-        <button className="bg-#FAFAFA border-2 border-black  text-blue-900 px-4 py-2 rounded-md">
-          Meu espaço
-        </button>
-      </header>
-    <div className="flex items-center ml-10">
-        <h2 className="text-black text-sm">Você tem acesso ao conteúdo gratuito do Portal de Periódicos da CAPES</h2>
-    </div>
-    <div className="flex items-center ml-10 mb-4">
-        <h1 className="text-black">Acesso CAFe</h1>
-    </div>
 
       {/* Breadcrumb */}
       <div className="bg-indigo-950 text-white py-6 px-8 text-base">
@@ -91,41 +50,50 @@ export default function RecommendationsPage() {
 
       {/* Conteúdo Principal */}
       <section className="max-w-7xl mx-auto py-8 px-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          Recomendações
-        </h2>
+      {/* Título */}
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">
+        Recomendações
+      </h2>
+      <div className="h-px w-full bg-orange-600 mb-6"></div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {recommendations.map((rec, index) => (
-            <article
-              key={index}
-              className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
-            >
-              <Image
-                src={rec.image}
-                alt={rec.title}
-                width={400}
-                height={200}
-                className="w-full h-auto"
-              />
-              <div className="p-4">
-                <span className="text-blue-600 text-sm font-semibold">
+      {/* Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {recommendations.map((rec, index) => (
+          <div
+            key={index}
+            className="flex bg-white shadow-md rounded-lg overflow-hidden border border-gray-200"
+          >
+            {/* Imagem */}
+            <Image
+              src={rec.image}
+              alt={rec.title}
+              width={200}
+              height={100}
+              className="w-1/2"
+            />
+            {/* Conteúdo */}
+            <div className="p-4 flex flex-col justify-between w-1/2">
+              <div>
+                <h3 className="text-md text-black font-semibold">{rec.title}</h3>
+                <div className="flex gap-2">
+                <p className="text-xs text-gray-600 mt-2">{rec.date}</p>
+                <span className=" p-1 mt-0.5 text-xs bg-yellow-300 rounded-2xl text-black font-semibold">
                   {rec.tag}
                 </span>
-                <h3 className="text-lg font-semibold mt-2">{rec.title}</h3>
-                <p className="text-sm text-gray-600 mt-2">{rec.description}</p>
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-gray-500 text-xs">{rec.date}</span>
-                  <div className="text-yellow-500">
-                    {"★".repeat(rec.stars)}
-                    {"☆".repeat(5 - rec.stars)}
-                  </div>
+                </div>
+                <p className="text-xs text-gray-600 mt-2">{rec.description}</p>
+              </div>
+              <div className="flex justify-between items-center mt-4">
+                <div className="text-black">
+                  {"★".repeat(rec.stars)}
+                  {"☆".repeat(5 - rec.stars)}
                 </div>
               </div>
-            </article>
-          ))}
-        </div>
-      </section>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
     </main>
   );
 }
